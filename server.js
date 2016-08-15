@@ -17,6 +17,6 @@ app.get('/', function (req, res) {
   res.send('Hello World')
 });
 
-console.log(process.env.SLACK_TOKEN)
+console.log(req.slapp.meta)
 console.log('Listening on :' + process.env.PORT);
 app.listen(process.env.PORT);
