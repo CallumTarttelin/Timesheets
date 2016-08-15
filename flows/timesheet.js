@@ -1,11 +1,10 @@
-'use strict';
+'use strict'
 var fetch = require('fetch');
 
 
 module.exports = (slapp) => {
 
   slapp.command('/timesheet', (msg) => {
-    console.log("called outcome");
     var state = { requested: Date.now() };
     msg
       .say({

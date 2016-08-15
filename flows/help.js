@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = (slapp) => {
 
@@ -14,7 +14,7 @@ module.exports = (slapp) => {
 
   slapp.message('help', ['direct_message'], (msg) => {
     msg.say(help)
-  })
+  });
 
   slapp.message('hello|hi', ['direct_message'], (msg) => {
     msg.say(["Hello World","Hi", "I like timesheets"])

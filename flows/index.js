@@ -2,6 +2,6 @@
 
 // list out explicitly to control order
 module.exports = (slapp) => {
-  require('./help')(slapp)
+  require('./help')(slapp);
   require('./timesheet')(slapp)
-}
+};
