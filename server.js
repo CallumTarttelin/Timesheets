@@ -17,6 +17,6 @@ app.get('/', function (req, res) {
   res.send('Hello World')
 });
 
-console.log(slapp)
+console.log("thing" + process.env);
 console.log('Listening on :' + process.env.PORT);
 app.listen(process.env.PORT);
