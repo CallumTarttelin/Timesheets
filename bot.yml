@@ -1,4 +1,4 @@
-name: Pybot
+name: Timesheets
 slackscopes:
   - bot
   - commands

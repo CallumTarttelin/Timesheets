@@ -1,58 +1,53 @@
-'use strict'
+'use strict';
+var fetch = require('fetch');
+
 
 module.exports = (slapp) => {
 
-  slapp.command('/pybot', /^hello/, (msg) => {
-    msg.respond(msg.body.response_url, "Hello World")
-  })
-
-  slapp.message('^(hello|hi)', ['direct_mention', 'direct_message'], (msg, text) => {
-    msg.say(["Hello World","Hi"])
-  })
-
   slapp.command('/timesheet', (msg) => {
-    console.log("called outcome")
-    var state = { requested: Date.now() }
+    console.log("called outcome");
+    var state = { requested: Date.now() };
     msg
       .say({
         text: '',
         attachments: [
           {
-            text: 'Pass or Fail?',
-            fallback: 'Pass or Fail?',
-            callback_id: 'outcome_confirm_callback',
+            text: 'How billable are you for todays work?',
+            fallback: 'How billable?',
+            callback_id: 'timesheet_callback',
             color: "9900cc",
             actions: [
-              { name: 'answer', text: 'Full Day', type: 'button', value: 'Pass' },
-              { name: 'answer', text: 'Non Billable', type: 'button', value: 'Fail'},
+              { name: 'answer', text: 'Full Day', type: 'button', value: 'Billable' },
+              { name: 'answer', text: 'Non Billable', type: 'button', value: 'Not'},
               { name: 'cancel', text: 'Cancel', type: 'button', value: 'Cancel'}
             ]
           }]
       })
-      .route('handleOutcomeConfirmation', state, 60)
-  })
+      .route('handleTimesheet', state, 60)
+  });
 
-  slapp.route('handleOutcomeConfirmation', (msg, state) => {
+  slapp.route('handleTimesheet', (msg, state) => {
     if (msg.type !== 'action') {
       msg
         .say('Please choose a button')
-        .route('handleOutcomeConfirmation', state, 60)
+        .route('handleOutcomeConfirmation', state, 60);
       return
     }
 
-    let answer = msg.body.actions[0].value
-    if (answer == 'Pass') {
+    let answer = msg.body.actions[0].value;
+    if (answer == 'Billable') {
       msg.respond(msg.body.response_url, {
-        text: `Billed`,
+        text: `Sending Information`,
         delete_original: true
-      })
+      });
       return
     }
-    if (answer == 'Failed') {
+    if (answer == 'Not') {
       msg.respond(msg.body.response_url, {
-        text: `Not Billed`,
+        text: `Sending Information`,
         delete_original: true
-      })
+      });
+      return fetch
     }
     else {
       msg.respond(msg.body.response_url, {
@@ -61,4 +56,4 @@ module.exports = (slapp) => {
       })
     }
   })
-}
+};
