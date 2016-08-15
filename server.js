@@ -4,7 +4,6 @@ const Slapp = require('slapp');
 const BeepBoopConvoStore = require('slapp-convo-beepboop');
 const BeepBoopContext = require('slapp-context-beepboop');
 if (!process.env.PORT) throw Error('PORT required');
-if (!process.env.SLACK_TOKEN) throw Error('I was hoping this would work')
 
 var slapp = Slapp({
   convo_store: BeepBoopConvoStore(),
@@ -18,6 +17,5 @@ app.get('/', function (req, res) {
   res.send('Hello World')
 });
 
-console.log("thing" + process.env.SLACK_TOKEN);
 console.log('Listening on :' + process.env.PORT);
 app.listen(process.env.PORT);

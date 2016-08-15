@@ -8,7 +8,8 @@ module.exports = (slapp) => {
   Enter \`/pybot hello\` to also return hello world 
   `;
 
-  slapp.command('/pybot', /help/, (msg) => {
+  slapp.command('/timesheet', /help/, (msg) => {
+    msg.say("hello world")
     msg.respond(msg.body.response_url, help)
   });
 
