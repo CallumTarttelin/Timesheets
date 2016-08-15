@@ -1,0 +1,5 @@
+name: Pybot
+slackscopes:
+  - bot
+  - commands
+  - reactions:write
