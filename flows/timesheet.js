@@ -10,7 +10,7 @@ module.exports = (slapp) => {
     msg.say(["Hello World","Hi"])
   })
 
-  slapp.command('/timesheet', /^outcome$/, (msg) => {
+  slapp.command('/timesheet', (msg) => {
     console.log("called outcome")
     var state = { requested: Date.now() }
     msg
