@@ -23,8 +23,8 @@ module.exports = (slapp) => {
             callback_id: 'outcome_confirm_callback',
             color: "9900cc",
             actions: [
-              { name: 'answer', text: 'Pass', type: 'button', value: 'Pass', style: 'Primary' },
-              { name: 'answer', text: 'Fail', type: 'button', value: 'Fail', style: 'Danger' },
+              { name: 'answer', text: 'Full Day', type: 'button', value: 'Pass' },
+              { name: 'answer', text: 'Non Billable', type: 'button', value: 'Fail'},
               { name: 'cancel', text: 'Cancel', type: 'button', value: 'Cancel'}
             ]
           }]
@@ -43,14 +43,14 @@ module.exports = (slapp) => {
     let answer = msg.body.actions[0].value
     if (answer == 'Pass') {
       msg.respond(msg.body.response_url, {
-        text: `Passed`,
+        text: `Billed`,
         delete_original: true
       })
       return
     }
     if (answer == 'Failed') {
       msg.respond(msg.body.response_url, {
-        text: `Failed`,
+        text: `Not Billed`,
         delete_original: true
       })
     }
