@@ -9,11 +9,10 @@ module.exports = (slapp) => {
   `;
 
   slapp.command('/timesheet', /help/, (msg) => {
-    msg.say("hello world")
     msg.respond(msg.body.response_url, help)
   });
 
-  slapp.message('help', ['direct_message'], (msg) => {
+  slapp.event('message.im', (msg) => {
     msg.say(help)
   });
 
