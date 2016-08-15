@@ -3,4 +3,4 @@ slackscopes:
   - bot
   - commands
   - reactions:write
-  - im.history
+  - im:history
