@@ -4,6 +4,7 @@ const Slapp = require('slapp');
 const BeepBoopConvoStore = require('slapp-convo-beepboop');
 const BeepBoopContext = require('slapp-context-beepboop');
 if (!process.env.PORT) throw Error('PORT required');
+if (!process.env.SLACK_TOKEN) throw Error('I was hoping this would work')
 
 var slapp = Slapp({
   convo_store: BeepBoopConvoStore(),
