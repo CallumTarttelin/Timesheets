@@ -1,5 +1,6 @@
-'use strict'
+'use strict';
 var fetch = require('fetch');
+const API_ROOT = 'the url';
 
 
 module.exports = (slapp) => {
@@ -34,25 +35,35 @@ module.exports = (slapp) => {
     }
 
     let answer = msg.body.actions[0].value;
-    if (answer == 'Billable') {
-      msg.respond(msg.body.response_url, {
-        text: `Sending Information`,
-        delete_original: true
-      });
-      return
-    }
     if (answer == 'Not') {
       msg.respond(msg.body.response_url, {
         text: `Sending Information`,
         delete_original: true
       });
-      return fetch
-    }
+      }
     else {
       msg.respond(msg.body.response_url, {
-        text: `Cancelled`,
+        text: `Sending Information`,
         delete_original: true
+      });
+      return fetch(`${API_ROOT}/PLACEHOLDER_URL`, {
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({
+          status: status,
+          channelName: channel.group.name,
+          interviewStep: step,
+          user: user.user.profile.email,
+        })
       })
+        .then(response => response.text())
+        .then(msg => {
+          msg.respond(msg.body.response_url, {
+            text: response.text(),
+            delete_original: true
+            }
+          )
+        });
     }
   })
 };

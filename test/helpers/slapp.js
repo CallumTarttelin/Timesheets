@@ -1,0 +1,1 @@
+sinon = require('sinon')

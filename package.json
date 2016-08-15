@@ -12,6 +12,7 @@
     "dotenv-safe": "^2.3.1",
     "express": "^4.14.0",
     "fetch": "^1.1.0",
+    "sinon": "^1.17.5",
     "slapp": "^1.0.2",
     "slapp-context-beepboop": "^1.0.0",
     "slapp-convo-beepboop": "^1.0.0"
