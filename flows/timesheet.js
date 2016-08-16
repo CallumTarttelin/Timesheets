@@ -1,6 +1,5 @@
 'use strict';
-var fetch = require('fetch');
-
+const fetch = require('isomorphic-fetch');
 
 module.exports = (slapp) => {
 

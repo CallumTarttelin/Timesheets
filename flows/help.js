@@ -3,6 +3,7 @@
 module.exports = (slapp) => {
 
   let help = `
+  /shrug test
   Enter \`/timesheet\` to bring up timesheet entry
   Enter hi or hello in a direct message to return hello
   Enter \`/pybot help\` to bring up this help
