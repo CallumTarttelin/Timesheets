@@ -19,7 +19,7 @@ module.exports = (slapp) => {
             actions: [
               { name: 'answer', text: 'Full Day', type: 'button', value: 'Billable' },
               { name: 'answer', text: 'Non Billable', type: 'button', value: 'Not'},
-              { name: 'cancel', text: 'Cancel', type: 'button', value: 'Cancel'}
+              { name: 'cancel', text: 'Cancel', type: 'button', value: 'Cancel', style: 'danger'}
             ]
           }]
       })
@@ -46,7 +46,7 @@ module.exports = (slapp) => {
         text: `Sending Information`,
         delete_original: true
       });
-      return fetch(`${API_ROOT}/PLACEHOLDER_URL`, {
+      return fetch(`http://127.0.0.1:5000/`, {
         method: 'POST',
         headers: {'Content-type': 'application/json'},
         body: JSON.stringify({

@@ -1,10 +1,10 @@
-var sinon = require('sinon')
+var sinon = require('sinon');
 
-const msg = {
+const fakeMsg = {
   say: sinon.stub(),
   respond: sinon.stub()
 };
 
-const slapp = {
-  message:
-}
+module.exports = {
+  fakeMsg: fakeMsg
+};
