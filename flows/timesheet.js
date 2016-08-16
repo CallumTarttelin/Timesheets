@@ -35,9 +35,9 @@ module.exports = (slapp) => {
     }
 
     let answer = msg.body.actions[0].value;
-    if (answer == 'Not') {
+    if (answer == 'Cancel') {
       msg.respond(msg.body.response_url, {
-        text: `Sending Information`,
+        text: `Cancelled`,
         delete_original: true
       });
       }
@@ -50,10 +50,9 @@ module.exports = (slapp) => {
         method: 'POST',
         headers: {'Content-type': 'application/json'},
         body: JSON.stringify({
-          status: status,
-          channelName: channel.group.name,
-          interviewStep: step,
-          user: user.user.profile.email,
+          billableness: answer,
+          user: "placeholder",
+          time: "placeholder"
         })
       })
         .then(response => response.text())
