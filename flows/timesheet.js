@@ -1,6 +1,5 @@
 'use strict';
 var fetch = require('fetch');
-const API_ROOT = 'the url';
 
 
 module.exports = (slapp) => {
@@ -58,10 +57,14 @@ module.exports = (slapp) => {
         .then(response => response.text())
         .then(msg => {
           msg.respond(msg.body.response_url, {
-            text: response.text(),
+            text: `Cancelled`,
             delete_original: true
-            }
-          )
+          });
+          // msg.respond(msg.body.response_url, {
+          //   text: response.text(),
+          //   delete_original: true
+          //   }
+          // )
         });
     }
   })
