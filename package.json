@@ -1,10 +1,10 @@
 {
   "name": "Timesheets",
   "version": "0.0.1",
-  "description": "Slackbot for tracking who is in and who is out",
+  "description": "Slackbot for tracking timesheets",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --recursive",
     "start": "node server.js"
   },
   "author": "Equal Experts",
@@ -12,6 +12,8 @@
     "dotenv-safe": "^2.3.1",
     "express": "^4.14.0",
     "fetch": "^1.1.0",
+    "mocha": "^3.0.2",
+    "nock": "^8.0.0",
     "sinon": "^1.17.5",
     "slapp": "^1.0.2",
     "slapp-context-beepboop": "^1.0.0",
