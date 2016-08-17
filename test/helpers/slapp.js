@@ -1,9 +1,11 @@
 var sinon = require('sinon');
+//const slapp = require('slapp');
 
 let routes = [];
 
 const fakeMsg = {
   respond: sinon.spy(),
+  say: sinon.spy(),
   body: { response_url: 'foo'}
 };
 
@@ -42,7 +44,7 @@ const fakeController = {
     if (after) {
       after(fakeMsg, cmd, subtext)
     }
-  }
+  },
 };
 
 module.exports = {

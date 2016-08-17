@@ -3,8 +3,9 @@ const fetch = require('isomorphic-fetch');
 
 module.exports = (slapp) => {
 
-  slapp.command('/timesheet', (msg) => {
+  slapp.command('/timesheet', "", (msg) => {
     var state = { requested: Date.now() };
+    console.log("GO")
     msg
       .say({
         text: '',
@@ -20,9 +21,9 @@ module.exports = (slapp) => {
               { name: 'cancel', text: 'Cancel', type: 'button', value: 'Cancel', style: 'danger'}
             ]
           }]
-      })
-      .route('handleTimesheet', state, 60)
-  });
+      })})};//remove last 3
+      //.route('handleTimesheet', state, 60)
+/*  });
 
   slapp.route('handleTimesheet', (msg, state) => {
     if (msg.type !== 'action') {
@@ -67,4 +68,4 @@ module.exports = (slapp) => {
         });
     }
   })
-};
+};*/

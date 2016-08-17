@@ -11,7 +11,6 @@ module.exports = (slapp) => {
 
   slapp.command('/timesheet', 'help', (msg) => {
     console.log("started");
-    console.log(msg.body.response_url)
     msg.respond(msg.body.response_url, help)
   });
 
