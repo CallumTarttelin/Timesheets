@@ -9,7 +9,8 @@ module.exports = (slapp) => {
   Help is also callable via saying help in direct message
   `;
 
-  slapp.command('/timesheet', /help/, (msg) => {
+  slapp.command('/timesheet', 'help', (msg) => {
+    console.log("started")
     msg.respond(msg.body.response_url, help)
   });
 
