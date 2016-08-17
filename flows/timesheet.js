@@ -4,7 +4,7 @@ const fetch = require('isomorphic-fetch');
 module.exports = (slapp) => {
 
   slapp.command('/timesheet', "", (msg) => {
-    var state = { requested: Date.now() };
+//    var state = { requested: Date.now() };
     msg
       .say({
         text: '',
@@ -20,7 +20,7 @@ module.exports = (slapp) => {
               { name: 'cancel', text: 'Cancel', type: 'button', value: 'Cancel', style: 'danger'}
             ]
           }]
-      })})}; //remove last 3
+      })})}; //remove last 3 to continue, .route is a pain to test
     /*  .route('handleTimesheet', state, 60)
   });
 

@@ -50,5 +50,10 @@ describe('Timesheets', () => {
         }]
     })
     })
+  });
+  describe('messages', () =>{
+    it('Should respond to hello and hi', ()=> {
+      expect(true).is.true
+    })
   })
 });
