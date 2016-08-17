@@ -30,10 +30,10 @@ describe('Timesheets', () => {
     it('Should create a button', ()=> {
       const command = "/timesheet";
       const fake = sinon.spy();
-      controller.sendCommand(command, 0, fake);
+      controller.sendCommand(command, "", fake);
       const call = fake.getCall(0);
       expect(call.args[1]).to.equal("/timesheet");
-      expect(call.args[2]).to.equal();
+      expect(call.args[2]).to.equal("");
       expect(call.args[0].say).to.be.calledWith({
       text: '',
         attachments: [
