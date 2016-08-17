@@ -10,15 +10,16 @@ module.exports = (slapp) => {
   `;
 
   slapp.command('/timesheet', 'help', (msg) => {
-    console.log("started")
+    console.log("started");
+    console.log(msg.body.response_url)
     msg.respond(msg.body.response_url, help)
   });
 
-  slapp.message('\\bhelp\\b|\\bpanic\\b', ['direct_message'], (msg) => {
+ /* slapp.message('\\bhelp\\b|\\bpanic\\b', ['direct_message'], (msg) => {
     msg.say(help)
   });
 
   slapp.message('\\bhello\\b|\\bhey\\b|\\bhi\\b', ['direct_message'], (msg) => {
     msg.say(["Hello World","Hi", "I like timesheets"])
-  });
+  });*/
 };

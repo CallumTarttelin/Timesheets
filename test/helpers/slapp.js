@@ -3,7 +3,8 @@ var sinon = require('sinon');
 let routes = [];
 
 const fakeMsg = {
-  respond: sinon.stub()
+  respond: sinon.spy(),
+  body: { response_url: 'foo'}
 };
 
 const fakeController = {
