@@ -1,6 +1,6 @@
-nock = require('nock');
+const nock = require('nock');
 const timesheet = require('../../flows/timesheet');
-const controller = require('../helpers/slapp').fakeController;
+//const controller = require('../helpers/slapp').fakeController;
 const sinon = require('sinon');
 const chai = require('chai');
 chai.use(require('sinon-chai'));
@@ -8,7 +8,7 @@ const expect = chai.expect;
 //require('../../flows')(controller);
 
 describe('Timesheets', () => {
-  describe('/timesheet help', () => {
+  describe('timesheet help and hello', () => {
     it('should reply with examples', ()=> {
       let helpText = `
   Enter \`/timesheet\` to bring up timesheet entry
@@ -16,17 +16,23 @@ describe('Timesheets', () => {
   Enter \`/pybot help\` to bring up this help
   Help is also callable via saying help in direct message
   `;// Please note that indenting this block makes the test fail DO NOT TOUCH
-      const command = "/timesheet";
-      const subtext = "help";
-      const fake = sinon.spy();
-      controller.sendCommand(command, subtext, fake);
-      const call = fake.getCall(0);
-      expect(call.args[1]).to.equal("/timesheet");
-      expect(call.args[2]).to.equal("help");
-      expect(call.args[0].respond).to.be.calledWith('foo', helpText);
+      const command = sinon.spy();
+      const fake = {
+        command: command,
+        action: () => {},
+      };
+      require('../../flows/help')(fake);
+      expect(command).to.be.called;
+      expect(command.getCall(0).args[0]).to.equal('/timesheet');
+      expect(command.getCall(0).args[1]).to.equal('help');
+      const msg_callback = sinon.spy();
+      command.getCall(0).args[2]({respond: msg_callback, body: {response_url: "timesheet_callback"}});
+      const msg = msg_callback.getCall(0).args;
+      expect(msg[0]).to.equal('timesheet_callback');
+      expect(msg[1]).to.equal(helpText);
     })
   });
-  describe('/timesheet', () =>{
+  describe('main timesheet', () =>{
     it('should accept a /timesheet command', () => {
       const command = sinon.spy();
       const fake = {
@@ -72,9 +78,4 @@ describe('Timesheets', () => {
       expect(msg[1].text).to.equal("Sending Information")
     });
   });
-  // describe('messages', () =>{
-  //   it('Should respond to hello and hi', ()=> {
-  //     expect(true).is.true
-  //   })
-  // })
 });
