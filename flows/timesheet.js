@@ -23,7 +23,6 @@ module.exports = (slapp) => {
   });
 
   slapp.action('timesheet_callback', (msg) => {
-    console.log(msg)
     const answer = msg.body.actions[0].value;
     if (answer === 'Cancel') {
       msg.respond(msg.body.response_url, {

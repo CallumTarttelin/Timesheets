@@ -41,7 +41,7 @@ describe('Timesheets', () => {
       const msg = msg_callback.getCall(0).args[0];
       expect(msg.attachments[0].callback_id).to.equal('timesheet_callback');
     });
-    it.only('should cancel when cancel pressed', () => {
+    it('should cancel when cancel pressed', () => {
       const action = sinon.spy();
       const fake = {
         action: action,
@@ -50,16 +50,31 @@ describe('Timesheets', () => {
       require('../../flows/timesheet')(fake);
       expect(action).to.be.called;
       expect(action.getCall(0).args[0]).to.equal('timesheet_callback');
-      const msg_callback = sinon.spy();
-      console.log(action.getCall(0).args[1]);
-      action.getCall(0).args[1]({respond: msg_callback});
-      const msg = msg_callback.getCall(0).args[0];
-      expect(msg.attachments[0].callback_id).to.equal('timesheet_callback');
+      const call = {respond: sinon.spy(), body: {response_url: 'timesheet_callback',actions: [{value: "Cancel"}, "hi"]}};
+      action.getCall(0).args[1](call);
+      const msg = call.respond.getCall(0).proxy.firstCall.args;
+      expect(msg[0]).to.equal('timesheet_callback');
+      expect(msg[1].text).to.equal("Cancelled")
+    });
+    it('should say sending information whilst waiting for information', () => {
+      const action = sinon.spy();
+      const fake = {
+        action: action,
+        command: () => {}
+      };
+      require('../../flows/timesheet')(fake);
+      expect(action).to.be.called;
+      expect(action.getCall(0).args[0]).to.equal('timesheet_callback');
+      const call = {respond: sinon.spy(), body: {response_url: 'timesheet_callback',actions: [{value: "Pass"}, "hi"]}};
+      action.getCall(0).args[1](call);
+      const msg = call.respond.getCall(0).proxy.firstCall.args;
+      expect(msg[0]).to.equal('timesheet_callback');
+      expect(msg[1].text).to.equal("Sending Information")
     });
   });
-  describe('messages', () =>{
-    it('Should respond to hello and hi', ()=> {
-      expect(true).is.true
-    })
-  })
+  // describe('messages', () =>{
+  //   it('Should respond to hello and hi', ()=> {
+  //     expect(true).is.true
+  //   })
+  // })
 });
