@@ -5,7 +5,7 @@ const sinon = require('sinon');
 const chai = require('chai');
 chai.use(require('sinon-chai'));
 const expect = chai.expect;
-require('../../flows')(controller);
+//require('../../flows')(controller);
 
 describe('Timesheets', () => {
   describe('/timesheet help', () => {
@@ -27,29 +27,35 @@ describe('Timesheets', () => {
     })
   });
   describe('/timesheet', () =>{
-    it('Should create a button', ()=> {
-      const command = "/timesheet";
-      const fake = sinon.spy();
-      controller.sendCommand(command, "", fake);
-      const call = fake.getCall(0);
-      expect(call.args[1]).to.equal("/timesheet");
-      expect(call.args[2]).to.equal("");
-      expect(call.args[0].say).to.be.calledWith({
-      text: '',
-        attachments: [
-        {
-          text: 'How billable are you for todays work?',
-          fallback: 'How billable?',
-          callback_id: 'timesheet_callback',
-          color: "9900cc",
-          actions: [
-            { name: 'answer', text: 'Full Day', type: 'button', value: 'Billable' },
-            { name: 'answer', text: 'Non Billable', type: 'button', value: 'Not'},
-            { name: 'cancel', text: 'Cancel', type: 'button', value: 'Cancel', style: 'danger'}
-          ]
-        }]
-    })
-    })
+    it('should accept a /timesheet command', () => {
+      const command = sinon.spy();
+      const fake = {
+        command: command,
+        action: () => {}
+      };
+      require('../../flows/timesheet')(fake);
+      expect(command).to.be.called;
+      expect(command.getCall(0).args[0]).to.equal('/timesheet');
+      const msg_callback = sinon.spy();
+      command.getCall(0).args[2]({say: msg_callback});
+      const msg = msg_callback.getCall(0).args[0];
+      expect(msg.attachments[0].callback_id).to.equal('timesheet_callback');
+    });
+    it.only('should cancel when cancel pressed', () => {
+      const action = sinon.spy();
+      const fake = {
+        action: action,
+        command: () => {}
+      };
+      require('../../flows/timesheet')(fake);
+      expect(action).to.be.called;
+      expect(action.getCall(0).args[0]).to.equal('timesheet_callback');
+      const msg_callback = sinon.spy();
+      console.log(action.getCall(0).args[1]);
+      action.getCall(0).args[1]({respond: msg_callback});
+      const msg = msg_callback.getCall(0).args[0];
+      expect(msg.attachments[0].callback_id).to.equal('timesheet_callback');
+    });
   });
   describe('messages', () =>{
     it('Should respond to hello and hi', ()=> {

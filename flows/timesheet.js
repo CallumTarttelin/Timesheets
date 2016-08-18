@@ -4,7 +4,6 @@ const fetch = require('isomorphic-fetch');
 module.exports = (slapp) => {
 
   slapp.command('/timesheet', "", (msg) => {
-//    var state = { requested: Date.now() };
     msg
       .say({
         text: '',
@@ -20,20 +19,13 @@ module.exports = (slapp) => {
               { name: 'cancel', text: 'Cancel', type: 'button', value: 'Cancel', style: 'danger'}
             ]
           }]
-      })})}; //remove last 3 to continue, .route is a pain to test
-    /*  .route('handleTimesheet', state, 60)
+      });
   });
 
-  slapp.route('handleTimesheet', (msg, state) => {
-    if (msg.type !== 'action') {
-      msg
-        .say('Please choose a button')
-        .route('handleOutcomeConfirmation', state, 60);
-      return
-    }
-
-    let answer = msg.body.actions[0].value;
-    if (answer == 'Cancel') {
+  slapp.action('timesheet_callback', (msg) => {
+    console.log(msg)
+    const answer = msg.body.actions[0].value;
+    if (answer === 'Cancel') {
       msg.respond(msg.body.response_url, {
         text: `Cancelled`,
         delete_original: true
@@ -44,28 +36,27 @@ module.exports = (slapp) => {
         text: `Sending Information`,
         delete_original: true
       });
-      return fetch(`http://127.0.0.1:5000/`, {
-        method: 'POST',
-        headers: {'Content-type': 'application/json'},
-        body: JSON.stringify({
-          billableness: answer,
-          user: "placeholder",
-          time: "placeholder"
-        })
-      })
-        .then(response => response.text())
-        .then(msg => {
-          msg.respond(msg.body.response_url, {
-            text: `Cancelled`,
-            delete_original: true
-          });
-          // msg.respond(msg.body.response_url, {
-          //   text: response.text(),
-          //   delete_original: true
-          //   }
-          // )
-        });
+      // return fetch(`http://127.0.0.1:5000/`, {
+      //   method: 'POST',
+      //   headers: {'Content-type': 'application/json'},
+      //   body: JSON.stringify({
+      //     billableness: answer,
+      //     user: "placeholder",
+      //     time: "placeholder"
+      //   })
+      // })
+      //   .then(response => response.text())
+      //   .then(msg => {
+      //     msg.respond(msg.body.response_url, {
+      //       text: `Cancelled`,
+      //       delete_original: true
+      //     });
+      //     msg.respond(msg.body.response_url, {
+      //       text: response.text(),
+      //       delete_original: true
+      //       }
+      //     )
+      //   });
     }
   })
 };
-*/
