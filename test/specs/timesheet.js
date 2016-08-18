@@ -1,4 +1,5 @@
 const nock = require('nock');
+const API_ROOT = "http://127.0.0.1:5000"
 const timesheet = require('../../flows/timesheet');
 //const controller = require('../helpers/slapp').fakeController;
 const sinon = require('sinon');
@@ -56,13 +57,21 @@ describe('Timesheets', () => {
       require('../../flows/timesheet')(fake);
       expect(action).to.be.called;
       expect(action.getCall(0).args[0]).to.equal('timesheet_callback');
-      const call = {respond: sinon.spy(), body: {response_url: 'timesheet_callback',actions: [{value: "Cancel"}, "hi"],user: {name: "user"}, channel: {name: "channel"}}};
+      const call = {respond: sinon.spy(), body: {response_url: 'timesheet_callback',actions: [{value: "Cancel"}, "hi"],user: {name: "user"}}};
       action.getCall(0).args[1](call);
       const msg = call.respond.getCall(0).proxy.firstCall.args;
       expect(msg[0]).to.equal('timesheet_callback');
       expect(msg[1].text).to.equal("Cancelled")
     });
     it('should say sending information whilst waiting for information', () => {
+      const api = nock(API_ROOT)
+        .post('/timesheets', {
+          billableness: 'Billable',
+          user: 'user',
+          time: /.*/
+        })
+        .reply(200, "got");
+
       const action = sinon.spy();
       const fake = {
         action: action,
@@ -71,11 +80,15 @@ describe('Timesheets', () => {
       require('../../flows/timesheet')(fake);
       expect(action).to.be.called;
       expect(action.getCall(0).args[0]).to.equal('timesheet_callback');
-      const call = {respond: sinon.spy(), body: {response_url: 'timesheet_callback',actions: [{value: "pass"}, "hi"],user: {name: "user"}, channel: {name: "channel"}}};
+      const call = {respond: sinon.spy(), body: {response_url: 'timesheet_callback',actions: [{value: "pass"}, "hi"],user: {name: "user"}}};
       action.getCall(0).args[1](call);
       const msg = call.respond.getCall(0).proxy.firstCall.args;
       expect(msg[0]).to.equal('timesheet_callback');
-      expect(msg[1].text).to.equal("Sending Information")
+      expect(msg[1].text).to.equal("Sending Information");
+      console.log(call.respond.callCount);
+      console.log(call.respond.getCalls());
+      const updated = call.respond.getCall(0).proxy.secondCall.args;
+      expect(updated[1].text).to.equal("got")
     });
   });
 });

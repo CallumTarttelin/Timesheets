@@ -25,8 +25,7 @@ module.exports = (slapp) => {
   slapp.action('timesheet_callback', (msg) => {
     const answer = msg.body.actions[0].value;
     const username = msg.body.user.name;
-    const channelname = msg.body.channel.name;
-    console.log(username, channelname)
+    const date = new Date().toISOString();
     if (answer === 'Cancel') {
       msg.respond(msg.body.response_url, {
         text: `Cancelled`,
@@ -38,27 +37,22 @@ module.exports = (slapp) => {
         text: `Sending Information`,
         delete_original: true
       });
-      return fetch(`http://127.0.0.1:5000/`, {
+      return fetch(`http://127.0.0.1:5000/timesheets`, {
         method: 'POST',
         headers: {'Content-type': 'application/json'},
         body: JSON.stringify({
           billableness: answer,
-          user: "placeholder",
-          time: "placeholder"
+          user: username,
+          time: date
         })
       })
         .then(response => response.text())
-        .then(msg => {
-          msg.respond(msg.body.response_url, {
-            text: `Unable to do this right now, try again later`,
-            delete_original: true
+          .then(msg => {
+            msg.respond(msg.body.response_url, {
+              text: response.text(),
+              delete_original: true
+              })
           });
-          msg.respond(msg.body.response_url, {
-            text: response.text(),
-            delete_original: true
-            }
-          )
-        });
     }
   })
 };
