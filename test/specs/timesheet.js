@@ -56,7 +56,7 @@ describe('Timesheets', () => {
       require('../../flows/timesheet')(fake);
       expect(action).to.be.called;
       expect(action.getCall(0).args[0]).to.equal('timesheet_callback');
-      const call = {respond: sinon.spy(), body: {response_url: 'timesheet_callback',actions: [{value: "Cancel"}, "hi"]}};
+      const call = {respond: sinon.spy(), body: {response_url: 'timesheet_callback',actions: [{value: "Cancel"}, "hi"],user: {name: "user"}, channel: {name: "channel"}}};
       action.getCall(0).args[1](call);
       const msg = call.respond.getCall(0).proxy.firstCall.args;
       expect(msg[0]).to.equal('timesheet_callback');
@@ -71,7 +71,7 @@ describe('Timesheets', () => {
       require('../../flows/timesheet')(fake);
       expect(action).to.be.called;
       expect(action.getCall(0).args[0]).to.equal('timesheet_callback');
-      const call = {respond: sinon.spy(), body: {response_url: 'timesheet_callback',actions: [{value: "Pass"}, "hi"]}};
+      const call = {respond: sinon.spy(), body: {response_url: 'timesheet_callback',actions: [{value: "pass"}, "hi"],user: {name: "user"}, channel: {name: "channel"}}};
       action.getCall(0).args[1](call);
       const msg = call.respond.getCall(0).proxy.firstCall.args;
       expect(msg[0]).to.equal('timesheet_callback');
